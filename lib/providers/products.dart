@@ -5,15 +5,19 @@ import 'package:flutter_shops/providers/product.dart';
 class Products with ChangeNotifier {
   List<Product> _items = DUMMY_PRODUCT;
 
-  List<Product> get items{
+  List<Product> get items {
     return [..._items];
   }
 
-  Product findById(productId){
+  List<Product> get favoriteItems {
+    return _items.where((element) => element.isFavorite).toList();
+  }
+
+  Product findById(productId) {
     return _items.firstWhere((item) => item.id == productId);
   }
 
-  void addProduct(product){
+  void addProduct(product) {
     _items.add(product);
     notifyListeners();
   }
