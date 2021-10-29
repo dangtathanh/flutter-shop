@@ -10,7 +10,6 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var productId = ModalRoute.of(context)!.settings.arguments as String;
     var product = Provider.of<Products>(
       context,
@@ -20,7 +19,42 @@ class ProductDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(product.title),
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          SizedBox(
+            height: 300,
+            width: double.infinity,
+            child: Image.network(
+              product.imageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            '\$${product.price}',
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.grey,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
+            width: double.infinity,
+            child: Text(
+              product.description,
+              textAlign: TextAlign.center,
+              softWrap: true,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
