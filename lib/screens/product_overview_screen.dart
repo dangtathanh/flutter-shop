@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shops/widgets/producs_grid.dart';
+import 'package:flutter_shops/providers/cart.dart';
+import 'package:flutter_shops/screens/cart_screen.dart';
+import 'package:flutter_shops/widgets/badge.dart';
+import 'package:flutter_shops/widgets/products_grid.dart';
+import 'package:provider/provider.dart';
 
 enum FIlterOptions {
   favorites,
@@ -18,6 +22,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text('MyShop'),
@@ -42,6 +47,22 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
                 value: FIlterOptions.all,
               ),
             ],
+          ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+              child: ch ?? const Text('Emtpy cart'),
+              value: cart.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: const Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  CartScreen.routeName,
+                );
+              },
+            ),
           ),
         ],
       ),
